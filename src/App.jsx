@@ -8,11 +8,12 @@ import Officers from "./pages/Officers.jsx";
 import Rates from "./pages/Rates.jsx";
 import News from "./pages/News.jsx";
 import Chat from "./pages/Chat.jsx";
+import { Forum, ForumAsk, ForumDetail } from "./pages/Forum.jsx";
 import Dispute from "./pages/Dispute.jsx";
 import Settings from "./pages/Settings.jsx";
 import { ActsHome, ActStructure, ActSection } from "./pages/Acts.jsx";
 
-const NAV = [["/", "⌂", "Home"], ["/chat", "✎", "Ask"], ["/dispute", "⚖", "Dispute"], ["/news", "✉", "News"], ["/settings", "☺", "Account"]];
+const NAV = [["/", "⌂", "Home"], ["/forum", "✎", "Ask"], ["/dispute", "⚖", "Dispute"], ["/news", "✉", "News"], ["/settings", "☺", "Account"]];
 
 export default function App() {
   return (
@@ -30,6 +31,9 @@ export default function App() {
         <Route path="/rates" element={<Rates />} />
         <Route path="/news" element={<News />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/ask" element={<ForumAsk />} />
+        <Route path="/forum/:id" element={<ForumDetail />} />
         <Route path="/dispute" element={<Dispute />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<div className="page"><h2 className="display">Page not found</h2></div>} />

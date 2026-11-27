@@ -26,14 +26,47 @@ function Login({ onDone }) {
 
 export default function Settings() {
   const [me, setMe] = useState(undefined);
-  const load = () => api.get("/auth/me").then(setMe).catch(() => setMe(null));
+  const [fullName, setFullName] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [saveErr, setSaveErr] = useState(null);
+
+  const load = () => api.get("/auth/me")
+    .then((u) => { setMe(u); setFullName(u.full_name || ""); })
+    .catch(() => setMe(null));
   useEffect(() => { load(); }, []);
+
+  async function saveName(e) {
+    e.preventDefault();
+    setSaving(true); setSaved(false); setSaveErr(null);
+    try {
+      const updated = await api.put("/auth/me", { full_name: fullName });
+      setMe(updated);
+      setFullName(updated.full_name || "");
+      setSaved(true);
+    } catch (err) {
+      setSaveErr(err.message);
+    }
+    setSaving(false);
+  }
+
   return (
     <Screen title="Account settings" back="/">
       {me === undefined && <p className="muted">Loading…</p>}
       {me === null && <Login onDone={load} />}
       {me && (
-        <p>Signed in as <b>{me.email}</b> <button className="chip" onClick={() => { auth.clear(); setMe(null); }}>Sign out</button></p>
+        <>
+          <p>Signed in as <b>{me.email}</b> <button className="chip" onClick={() => { auth.clear(); setMe(null); }}>Sign out</button></p>
+          <form onSubmit={saveName} className="card" style={{ marginTop: 12 }}>
+            <label className="muted" style={{ display: "block", marginBottom: 6 }}>Full name (shown on forum posts)</label>
+            {saveErr && <div className="err">{saveErr}</div>}
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <input className="input" style={{ marginBottom: 0 }} value={fullName} onChange={(e) => { setFullName(e.target.value); setSaved(false); }} placeholder="Enter your full name" maxLength={100} />
+              <button className="btn" disabled={saving}>{saving ? "Saving…" : "Save"}</button>
+            </div>
+            {saved && <p className="muted" style={{ margin: "6px 0 0", color: "var(--fav)" }}>Saved ✓</p>}
+          </form>
+        </>
       )}
     </Screen>
   );
