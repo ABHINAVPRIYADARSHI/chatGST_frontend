@@ -43,7 +43,7 @@ function ChatInner() {
         </div>
       ))}
       {busy && <div className="bubble assistant muted">Thinking…</div>}
-      {error && <div className="err">{error} {error.includes("No AI provider") && <Link to="/settings" style={{ textDecoration: "underline" }}>Open AI settings</Link>}</div>}
+      {error && <div className="err">{error}</div>}
       <form onSubmit={send} style={{ display: "flex", gap: 8, position: "sticky", bottom: 70, background: "var(--parchment)", paddingTop: 8 }}>
         <input className="input" style={{ marginBottom: 0 }} value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask a GST question…" maxLength={4000} />
         <button className="btn" disabled={busy || !text.trim()}>Send</button>

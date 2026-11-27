@@ -33,7 +33,7 @@ function Inner() {
         <input className="input" type="file" accept="application/pdf,image/png,image/jpeg,image/webp" onChange={(e) => setFile(e.target.files?.[0] || null)} />
         <button className="btn block" disabled={!file || busy}>{busy ? "Analysing… (can take a minute)" : "Analyse & draft reply"}</button>
       </form>
-      {error && <div className="err" style={{ marginTop: 12 }}>{error} {error.includes("No AI provider") && <Link to="/settings" style={{ textDecoration: "underline" }}>Open AI settings</Link>}</div>}
+      {error && <div className="err" style={{ marginTop: 12 }}>{error}</div>}
       {res && (
         <>
           <div className="note" style={{ marginTop: 14 }}>{res.disclaimer}</div>

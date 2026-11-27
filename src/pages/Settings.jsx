@@ -24,42 +24,16 @@ function Login({ onDone }) {
   );
 }
 
-function Provider({ p, reload }) {
-  const [key, setKey] = useState(""); const [model, setModel] = useState(p.model); const [busy, setBusy] = useState(false); const [error, setError] = useState(null);
-  async function save() {
-    setBusy(true); setError(null);
-    try { await api.put(`/ai/providers/${p.provider}`, { api_key: key, model, is_default: true }); setKey(""); reload(); }
-    catch (e) { setError(e.message); }
-    setBusy(false);
-  }
-  return (
-    <div className="card">
-      <div className="title">{p.label} {p.is_default && <span className="tag">DEFAULT</span>}</div>
-      <div className="muted">{p.key_hint ? `Key saved (${p.key_hint})` : "No key saved"}{!p.supports_pdf && " · images only (no PDF)"}</div>
-      {error && <div className="err" style={{ marginTop: 8 }}>{error}</div>}
-      <input className="input" style={{ marginTop: 8 }} placeholder="Model" value={model} onChange={(e) => setModel(e.target.value)} />
-      <input className="input" type="password" autoComplete="off" placeholder="Paste API key" value={key} onChange={(e) => setKey(e.target.value)} />
-      <button className="btn" disabled={busy || key.length < 8} onClick={save}>Save & use</button>
-      {p.key_hint && <button className="btn ghost" style={{ marginLeft: 8 }} onClick={async () => { await api.del(`/ai/providers/${p.provider}`); reload(); }}>Remove</button>}
-    </div>
-  );
-}
-
 export default function Settings() {
   const [me, setMe] = useState(undefined);
-  const [providers, setProviders] = useState([]);
-  const load = () => api.get("/auth/me").then((u) => { setMe(u); return api.get("/ai/providers").then(setProviders); }).catch(() => setMe(null));
+  const load = () => api.get("/auth/me").then(setMe).catch(() => setMe(null));
   useEffect(() => { load(); }, []);
   return (
-    <Screen title="Account & AI settings" back="/">
+    <Screen title="Account settings" back="/">
       {me === undefined && <p className="muted">Loading…</p>}
       {me === null && <Login onDone={load} />}
       {me && (
-        <>
-          <p>Signed in as <b>{me.email}</b> <button className="chip" onClick={() => { auth.clear(); setMe(null); }}>Sign out</button></p>
-          <div className="note">Your API key is encrypted on our server and used only to call the provider you choose, for your own chat and dispute drafts. It is never sent back to the browser.</div>
-          {providers.map((p) => <Provider key={p.provider + p.key_hint} p={p} reload={load} />)}
-        </>
+        <p>Signed in as <b>{me.email}</b> <button className="chip" onClick={() => { auth.clear(); setMe(null); }}>Sign out</button></p>
       )}
     </Screen>
   );
