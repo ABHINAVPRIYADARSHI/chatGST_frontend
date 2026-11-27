@@ -12,7 +12,7 @@ export default function Notifications() {
   const years = useApi("/notifications/years", { category: cat }, [cat]);
   const catOptions = (cats.data || []).map((c) => ({ ...c, label: LABELS[c.key] || c.key }));
   return (
-    <Screen title="Notifications" back="/">
+    <Screen title="Notifications" back="/acts">
       <SearchBox onChange={setQ} placeholder="Search notifications…" />
       <Chips options={catOptions} value={cat} onChange={(v) => { setCat(v || "ct"); setYear(""); }} allLabel="CGST" />
       <Chips options={years.data || []} value={year} onChange={setYear} allLabel="All years" />

@@ -8,7 +8,7 @@ export default function Library() {
   const [q, setQ] = useState("");
   const years = useApi(`/${kind}/years`, undefined, [kind]);
   return (
-    <Screen title={kind === "circulars" ? "Circulars" : "Instructions"} back="/">
+    <Screen title={kind === "circulars" ? "Circulars" : "Instructions"} back="/acts">
       <SearchBox onChange={setQ} placeholder={`Search ${kind}…`} />
       <Chips options={years.data || []} value={year} onChange={setYear} allLabel="All years" />
       <PagedList path={`/${kind}`} params={{ year, q }} deps={[kind]}

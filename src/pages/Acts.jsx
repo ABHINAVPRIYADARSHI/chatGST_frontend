@@ -17,6 +17,26 @@ export function ActsHome() {
   const acts = useApi("/acts");
   return (
     <Screen title="Acts & Rules" back="/">
+      <div className="grid" style={{ marginBottom: 18 }}>
+        <Link to="/library/circulars" className="tile">
+          <b className="display">Circulars</b>
+          <small>CBIC year-wise</small>
+        </Link>
+        <Link to="/library/instructions" className="tile">
+          <b className="display">Instructions</b>
+          <small>CBIC year-wise</small>
+        </Link>
+        <Link to="/notifications" className="tile">
+          <b className="display">Notifications</b>
+          <small>CGST · IGST · Rate</small>
+        </Link>
+        <Link to="/forms" className="tile">
+          <b className="display">Forms</b>
+          <small>Statutory GST forms</small>
+        </Link>
+      </div>
+
+      <div className="sec">Acts & Rules Provisions</div>
       <SearchBox onChange={setQ} placeholder="Search provisions, e.g. input tax credit, reverse charge" />
       {q.length >= 2 ? (
         <PagedList path="/acts/search" params={{ q }} renderItem={(s) => (

@@ -61,7 +61,7 @@ export default function Settings() {
             <label className="muted" style={{ display: "block", marginBottom: 6 }}>Full name (shown on forum posts)</label>
             {saveErr && <div className="err">{saveErr}</div>}
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <input className="input" style={{ marginBottom: 0 }} value={fullName} onChange={(e) => { setFullName(e.target.value); setSaved(false); }} placeholder="Enter your full name" maxLength={100} />
+              <input className="input" style={{ marginBottom: 0, flex: 1 }} value={fullName} onChange={(e) => { setFullName(e.target.value); setSaved(false); }} placeholder="Enter your full name" maxLength={100} />
               <button className="btn" disabled={saving}>{saving ? "Saving…" : "Save"}</button>
             </div>
             {saved && <p className="muted" style={{ margin: "6px 0 0", color: "var(--fav)" }}>Saved ✓</p>}

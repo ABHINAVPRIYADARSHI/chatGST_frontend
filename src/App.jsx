@@ -11,6 +11,7 @@ import Chat from "./pages/Chat.jsx";
 import { Forum, ForumAsk, ForumDetail } from "./pages/Forum.jsx";
 import Dispute from "./pages/Dispute.jsx";
 import Settings from "./pages/Settings.jsx";
+import Forms from "./pages/Forms.jsx";
 import { ActsHome, ActStructure, ActSection } from "./pages/Acts.jsx";
 
 const NAV = [["/", "⌂", "Home"], ["/forum", "✎", "Ask"], ["/dispute", "⚖", "Dispute"], ["/news", "✉", "News"], ["/settings", "☺", "Account"]];
@@ -25,7 +26,10 @@ export default function App() {
         <Route path="/acts/:key/:num" element={<ActSection />} />
         <Route path="/library/:kind" element={<Library />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/forms" element={<Forms />} />
+        <Route path="/acts/forms" element={<Forms />} />
         <Route path="/cases/detail/:id" element={<CaseDetail />} />
+        <Route path="/cases" element={<Cases />} />
         <Route path="/cases/:court" element={<Cases />} />
         <Route path="/officers" element={<Officers />} />
         <Route path="/rates" element={<Rates />} />
