@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api.js";
 
-export function Screen({ title, back, children }) {
+export function Screen({ title, back, action, children }) {
   const nav = useNavigate();
   return (
     <>
       <div className="topbar">
         {back && <button className="back" aria-label="Back" onClick={() => (back === true ? nav(-1) : nav(back))}>‹</button>}
         <h1 className="display">{title}</h1>
+        {action}
       </div>
       <div className="page">{children}</div>
     </>
